@@ -1,85 +1,74 @@
 Learning Pixi
 =============
 
-A step-by-step introduction to making games and interactive media with
-the [Pixi rendering engine](https://github.com/pixijs/pixi.js). **[Updated for Pixi v4.5.5](https://github.com/pixijs/pixi.js/releases/tag/v4.5.5)**. [Chinese version here: Pixi官方教程中文版](https://github.com/Zainking/learningPixi). If you like this
-tutorial, [you'll love the book, which contains 80% more content!](http://www.springer.com/us/book/9781484210956).
+[Pixi rendering engine](https://github.com/pixijs/pixi.js)でゲームやインタラクティブメディアを作成するためののステップガイド。**[Pixi v4.5.5](https://github.com/pixijs/pixi.js/releases/tag/v4.5.5)**用。[Chinese version here: Pixi官方教程中文版](https://github.com/Zainking/learningPixi). [もしこのチュートリアルが気に入ったなら、ここの本も好きになるでしょう。このコンテンツより80%以上の内容があります！](http://www.springer.com/us/book/9781484210956).
 
-### Table of contents:
-1. [Introduction](#introduction)
-2. [Setting up](#settingup)
-  1. [Installing Pixi](#installingpixi)
-3. [Creating the stage and renderer](#application)
-4. [Pixi sprites](#sprites)
-5. [Loading images into the texture cache](#loading)
-6. [Displaying sprites](#displaying)
-  1. [Using Aliases](#usingaliases)
-  2. [A little more about loading things](#alittlemoreaboutloadingthings)
-    1. [Make a sprite from an ordinary JavaScript Image object or Canvas](#makeaspritefromanordinaryjavascriptimageobject)
-    2. [Assigning a name to a loaded file](#assigninganametoaloadingfile)
-    3. [Monitoring load progress](#monitoringloadprogress)
-    4. [More about Pixi's loader](#moreaboutpixisloader)
-7. [Positioning sprites](#positioning)
-8. [Size and scale](#sizenscale)
-9. [Rotation](#rotation)
-10. [Make a sprite from a tileset sub-image](#tileset)
-11. [Using a texture atlas](#textureatlas)
-12. [Loading the texture atlas](#loadingatlas)
-13. [Creating sprites from a loaded texture atlas](#creating-sprites-from-a-loaded-texture-atlas)
-14. [Moving Sprites](#movingsprites)
-15. [Using velocity properties](#velocity)
-16. [Game states](#gamestates)
-17. [Keyboard Movement](#keyboard)
-18. [Grouping Sprites](#grouping)
-  1. [Local and global positions](#localnglobal)
-  2. [Using a ParticleContainer to group sprites](#spritebatch)
-19. [Pixi's Graphic Primitives](#graphic)
-  1. [Rectangle](#rectangles)
-  2. [Circles](#circles)
-  3. [Ellipses](#ellipses)
-  4. [Rounded rectangles](#rounded-rectangles)
-  5. [Lines](#lines)
-  6. [Polygons](#polygons)
-20. [Displaying text](#text)
-21. [Collision detection](#collision)
-  1. [The hitTestRectangle function](#the-hittestrectangle-function)
-22. [Case study: Treasure Hunter](#casestudy)
-  1. [Initialize the game in the setup function](#initialize)
-    1. [Creating the game scenes](#gamescene)
-    2. [Making the dungeon, door, explorer and treasure](#makingdungon)
-    3. [Making the blob monsters](#makingblob)
-    4. [Making health bar](#healthbar)
-    5. [Making message text](#message)
-  2. [Playing the game](#playing)
-  3. [Moving the explorer](#movingexplorer)
-    1. [Containing movement](#containingmovement)
-  4. [Moving the monsters](#movingmonsters)
-  5. [Checking for collisions](#checkingcollisions)
-  6. [Reaching the exit door and ending game](#reachingexit)
-23. [More about sprites](#spriteproperties)
-24. [Taking it further](#takingitfurther)</br>
+## 目次:
+- [目次:](#)
+- [Introduction ― 初めに](#introduction)
+- [Setting up ― セットアップ](#setting-up)
+  - [Installing Pixi ― Pixiのインストール](#installing-pixi--pixi)
+- [<a id='application'></a>](#a-idapplication-a)
+- [<a id='sprites'></a>](#a-idsprites-a)
+- [<a id='loading'></a>](#a-idloading-a)
+- [<a id='displaying'></a>](#a-iddisplaying-a)
+  - [Using aliases](#using-aliases)
+  - [A little more about loading things](#a-little-more-about-loading-things)
+    - [Make a sprite from an ordinary JavaScript Image object or Canvas](#make-a-sprite-from-an-ordinary-javascript-image-object-or-canvas)
+    - [Assigning a name to a loading file](#assigning-a-name-to-a-loading-file)
+    - [Monitoring load progress](#monitoring-load-progress)
+    - [More about Pixi's loader](#more-about-pixis-loader)
+- [<a id='positioning'></a>](#a-idpositioning-a)
+- [<a id='sizenscale'></a>](#a-idsizenscale-a)
+- [<a id='rotation'></a>](#a-idrotation-a)
+- [<a id='tileset'></a>](#a-idtileset-a)
+- [<a id='textureatlas'></a>](#a-idtextureatlas-a)
+- [<a id='loadingatlas'></a>](#a-idloadingatlas-a)
+- [<a id='creatingsprites'></a>](#a-idcreatingsprites-a)
+- [<a id='movingsprites'></a>](#a-idmovingsprites-a)
+- [<a id='velocity'></a>](#a-idvelocity-a)
+- [<a id='gamestates'></a>](#a-idgamestates-a)
+- [<a id='keyboard'></a>](#a-idkeyboard-a)
+- [<a id='grouping'></a>](#a-idgrouping-a)
+  - [Local and global positions](#local-and-global-positions)
+  - [Using a ParticleContainer to group sprites](#using-a-particlecontainer-to-group-sprites)
+- [<a id='graphic'></a>](#a-idgraphic-a)
+  - [Rectangles](#rectangles)
+  - [Circles](#circles)
+  - [Ellipses](#ellipses)
+  - [Rounded rectangles](#rounded-rectangles)
+  - [Lines](#lines)
+  - [Polygons](#polygons)
+- [Displaying text](#displaying-text)
+- [<a id='collision'></a>](#a-idcollision-a)
+  - [The hitTestRectangle function](#the-hittestrectangle-function)
+- [<a id='casestudy'></a>](#a-idcasestudy-a)
+  - [The code structure](#the-code-structure)
+  - [Initialize the game in the setup function](#initialize-the-game-in-the-setup-function)
+    - [Creating the game scenes](#creating-the-game-scenes)
+    - [Making the dungeon, door, explorer and treasure](#making-the-dungeon--door--explorer-and-treasure)
+    - [Making the blob monsters](#making-the-blob-monsters)
+    - [Making the health bar](#making-the-health-bar)
+    - [Making the message text](#making-the-message-text)
+  - [Playing the game](#playing-the-game)
+  - [Moving the explorer](#moving-the-explorer)
+    - [Containing movement](#containing-movement)
+  - [Moving the monsters](#moving-the-monsters)
+  - [Checking for collisions](#checking-for-collisions)
+  - [Reaching the exit door and ending the game](#reaching-the-exit-door-and-ending-the-game)
+- [<a id='spriteproperties'></a>](#a-idspriteproperties-a)
+- [<a id='takingitfurther'></a>](#a-idtakingitfurther-a)
+  - [Hexi](#hexi)
+  - [BabylonJS](#babylonjs)
+- [<a id='supportingthisproject'></a>](#a-idsupportingthisproject-a)
   i.[Hexi](#hexi)</br>
   ii.[BabylonJS](#babylonjs)</br>
 25. [Supporting this project](#supportingthisproject)
 
-<a id='introduction'></a>
-Introduction
+Introduction ― 初めに
 ------------
 
-Pixi is an extremely fast 2D sprite rendering engine. What does that
-mean? It means that it helps you to display, animate and manage
-interactive graphics so that it's easy for you to make games and
-applications using
-JavaScript and other HTML5 technologies. It has a sensible,
-uncluttered API and includes many useful features, like supporting
-texture atlases and providing a streamlined system for animating
-sprites (interactive images). It also gives you a complete scene graph so that you can
-create hierarchies of nested sprites (sprites inside sprites), as well
-as letting you attach mouse and touch events directly to sprites. And,
-most
-importantly, Pixi gets out of your way so that you can use as much or
-as little of it as you want to, adapt it to your personal coding
-style, and integrate it seamlessly with other useful frameworks.
+Pixiは非常に高速な2Dスプライトレンダリングエンジンです。どういうことかというと、表現、アニメーションそしてインタラクティブなグラフィック管理を助け、JavaScriptとHTML5などを使って簡単にゲームやアプリケーションを作ることができます。合理的で整理されたAPIと、テクスチャアトラスやアニメーションのためのスプライト(インタラクティブ画像)のような便利な機能を多数提供しています。また、階層としてネストされたスプライト(スプライト内のスプライト)を作成したり、スプライトに直接マウスやタッチのイベントをアタッチすることができるように、完全なシーングラフを提供します。そして最も重要なことに、Pixiは自分の好みやコーディングスタイルに合わせて使い分け、他の有用なフレームワークとシームレスに統合することができます。
 
 Pixi’s API is actually a refinement of a well-worn and battle-tested
 API pioneered by Macromedia/Adobe Flash. Old-skool Flash developers
@@ -151,18 +140,14 @@ questions about specific details or need any of the content clarified, please
 create an **issue** in this GitHub repository and I'll update the text
 with more information.)
 
-<a id='settingup'></a>
-Setting up
-----------
+Setting up ― セットアップ
+-------------
 
-Before you start writing any code, create a folder for your project, and launch a
-webserver in the project's root directory. If you aren't running a
-webserver, Pixi won't work.
+コードを作成する前に、プロジェクトのフォルダを作成し、プロジェクトのルートディレクトリでWebサーバを起動します。Webサーバを起動していないと、Pixiは動作しません。
 
-Next, you need to install Pixi. 
+次に、Pixiをインストールする必要があります。
 
-<a id='installingpixi'></a>
-### Installing Pixi
+### Installing Pixi ― Pixiのインストール
 
 The version used for this introduction is **v4.5.5**
 and you can find the `pixi.min.js`  file either in this repository's `pixi` folder or on [Pixi's release page for v4.5.5](https://github.com/pixijs/pixi.js/releases/tag/v4.5.5).
